@@ -1,2 +1,2 @@
-# appconfiguration-node-sample
-Node Application Sample for using App Configuration service Node SDK
+# IBM App Configuration samples
+Sample applications for App Configuration service
