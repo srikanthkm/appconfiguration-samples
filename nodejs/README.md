@@ -49,8 +49,8 @@ This sample contains an NodeJS project that you can use to learn more about the 
     - Script execution takes time. Script is executed successfully only when you see the log `---Demo script complete---` at the end in your terminal.
     - This script will create the collections, feature flags & segments in the instance which are required for the Bluecharge web app
 - Edit the configuration values in file [`app.js`](app.js)
-    1. Replace `region`, `guid` & `apikey` at [line 22](app.js#L22) with the values you obtained from the Service credentials section of the instance.
-    2. For Mongo database connection. Follow the instruction given in the file at [line 50](app.js#L50). Make sure you comment either of url, options before running the app locally or on the IKS(IBM Kubernetes Service).
+    1. Replace `region`, `guid` & `apikey` at [line 35](app.js#L35) with the values you obtained from the Service credentials section of the instance.
+    2. For Mongo database connection. Follow the instruction given in the file at [line 63](app.js#L63). Make sure you comment either of url, options before running the app locally or on the IKS(IBM Kubernetes Service).
 - Installing Dependencies
     - Run `npm install` from the root folder to install the app’s dependencies.
 
