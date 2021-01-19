@@ -180,7 +180,7 @@ addFeature()
 		printf "%bSuccess:  Feature updated with id $featureId\n"
 	fi
 
-	featureStatus=$(curl -s --write-out 'HTTPSTATUS:%{http_code}'  -X POST $featureUpdateURL -H "Authorization: $apikey" -H "Content-Type: application/json" --data '{"name": "Flight Booking","feature_id": "flight-booking","description": "New major functionality for introducing Flight bookings","enabled_value": false,"type": "BOOLEAN","disabled_value": false,"tags": "demo","segment_rules": [{"rules": [{"segments": ["'"${testersSegmentId}"'"]}],"value": "true","order": "1"}],"collections": [{"collection_id": "blue-charge","enabled": true,"deleted": false}]}' )
+	featureStatus=$(curl -s --write-out 'HTTPSTATUS:%{http_code}'  -X POST $featureUpdateURL -H "Authorization: $apikey" -H "Content-Type: application/json" --data '{"name": "Flight Booking","feature_id": "flight-booking","description": "New major functionality for introducing Flight bookings","enabled_value": false,"type": "BOOLEAN","disabled_value": false,"tags": "demo","segment_rules": [{"rules": [{"segments": ["'"${testersSegmentId}"'"]}],"value": true,"order": "1"}],"collections": [{"collection_id": "blue-charge","enabled": true,"deleted": false}]}' )
 	HTTP_BODY=$(echo $featureStatus | sed -e 's/HTTPSTATUS\:.*//g' | jq .)
 	HTTP_STATUS=$(echo $featureStatus | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 	if [ $HTTP_STATUS != 201 ]
@@ -192,7 +192,7 @@ addFeature()
 		printf "%bSuccess:  Feature updated with id $featureId\n"
 	fi
 
-	featureStatus=$(curl -s --write-out 'HTTPSTATUS:%{http_code}'  -X POST $featureUpdateURL -H "Authorization: $apikey" -H "Content-Type: application/json" --data '{"name": "Flight Discount","feature_id": "discount-on-flight-booking","description": "Flight discounts that are customized per alliance customer","enabled_value": 5,"type": "NUMERIC","disabled_value": 0,"tags": "demo,campaign,discount","segment_rules": [{"rules": [{"segments": ["'"${ibmerSegmentId}"'"]}],"value": "25","order": "1"}],"collections": [{"collection_id": "blue-charge","enabled": true,"deleted": false}]}' )
+	featureStatus=$(curl -s --write-out 'HTTPSTATUS:%{http_code}'  -X POST $featureUpdateURL -H "Authorization: $apikey" -H "Content-Type: application/json" --data '{"name": "Flight Discount","feature_id": "discount-on-flight-booking","description": "Flight discounts that are customized per alliance customer","enabled_value": 5,"type": "NUMERIC","disabled_value": 0,"tags": "demo,campaign,discount","segment_rules": [{"rules": [{"segments": ["'"${ibmerSegmentId}"'"]}],"value": 25,"order": "1"}],"collections": [{"collection_id": "blue-charge","enabled": true,"deleted": false}]}' )
 	HTTP_BODY=$(echo $featureStatus | sed -e 's/HTTPSTATUS\:.*//g' | jq .)
 	HTTP_STATUS=$(echo $featureStatus | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 	if [ $HTTP_STATUS != 201 ]
