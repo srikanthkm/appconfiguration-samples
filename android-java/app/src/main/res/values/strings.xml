@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Blue charge</string>
+    <string name="app_name_caps">BLUECHARGE</string>
+    <string name="bannertext">GET FREE COUPONS AND DISCOUNTS ON TOP BRANDS WITH EVERY RECHARGE</string>
+    <string name="broadband">BROADBAND</string>
+    <string name="dth">DTH</string>
+    <string name="Mobile">MOBILE</string>
+    <string name="txt_on_recharge">Recharge</string>
+    <string name="txt_on_booking">Booking</string>
+    <string name="flights">FLIGHTS</string>
+    <string name="bus">BUS</string>
+    <string name="recharge_offers_text">SPECIAL RECHARGE \n OFFERS</string>
+    <string name="recharge_offers_text1">Plan vouchers also act as validity voucher for validity extension alongwith extension of all freebies mentioned in the plan. STV subscription from selfcare is allowed for the STV amount Upto Rs 200.</string>
+    <string name="footer_copyright">© 2020 Blue Charge. All Rights Reserved</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_new">Click here to Register</string>
+    <string name="prompt_conf_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="login_1">Click here to Login</string>
+    <string name="profile_username"><![CDATA[Welcome <user>]]></string>
+    <string name="logout">LOGOUT</string>
+    <string name="welcome">Welcome</string>
+    <string name="lb_leaving_from">Origin</string>
+    <string name="lb_going_to">Destination</string>
+    <string name="lb_departure">Departure Date</string>
+    <string name="lb_tomorrow">Tommorow</string>
+    <string name="lb_premium_flights_only">No Stops</string>
+    <string name="btn_find_flights">show flights</string>
+
+    <string-array name="travel_class_array">
+        <item>Economy</item>
+        <item>Business</item>
+        <item>First class</item>
+    </string-array>
+
+</resources>

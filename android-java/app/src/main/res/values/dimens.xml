@@ -1,0 +1,16 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_regular">10dp</dimen>
+    <dimen name="margin_header">24dp</dimen>
+    <dimen name="margin_checkbox_negative">-7dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_regular">10dp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_regular">14sp</dimen>
+    <dimen name="divider_height">0.7dp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+
+</resources>
