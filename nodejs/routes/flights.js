@@ -13,7 +13,10 @@
 
 var express = require('express');
 var router = express.Router();
-const { AppConfigurationFeature } = require('ibm-appconfiguration-node-feature');
+const { AppConfiguration } = require('ibm-appconfiguration-node-sdk');
+let leftNavMenu;
+let discountEnabled;
+let discountValue;
 
 
 function logincheck(req, res, next) {
@@ -26,16 +29,20 @@ function logincheck(req, res, next) {
 }
 
 function featurecheck(req, res, next) {
-    const client = AppConfigurationFeature.getInstance();
+    let identityId = req.session.userEmail ? req.session.userEmail : 'defaultUser';
+    let identityAttributes = {
+        'email': req.session.userEmail
+    }
+    const client = AppConfiguration.getInstance();
 
-    // fetch the feature `left-navigation-menu` and attach the isEnbaled() value to the request header
+    // fetch the feature details of featureId `left-navigation-menu` and get the isEnabled() value
     const leftNavMenuFeature = client.getFeature('left-navigation-menu')
-    req.leftNavMenu = leftNavMenuFeature.isEnabled();
+    leftNavMenu = leftNavMenuFeature.isEnabled();
 
-    // fetch the feature `discount-on-flight-booking` and attach the isEnabled() value & getCurrentValue(req) value to the request header
+    // fetch the feature details of featureId `discount-on-flight-booking` and get the isEnabled() value & getCurrentValue(identityId, identityAttributes) value of the feature
     const discountFeature = client.getFeature('discount-on-flight-booking')
-    req.discountEnabled = discountFeature.isEnabled()
-    req.discountValue = discountFeature.getCurrentValue(req)        // feature evaluation via the req object
+    discountEnabled = discountFeature.isEnabled()
+    discountValue = discountFeature.getCurrentValue(identityId, identityAttributes)
 
     next();
 }
@@ -44,7 +51,7 @@ let loginAndFeatureCheck = [logincheck, featurecheck]
 
 /* GET flightbooking page. */
 router.get('/', loginAndFeatureCheck, function (req, res, next) {
-    res.render('flights', { isLoggedInUser: req.isLoggedInUser, leftNavMenu: req.leftNavMenu, discountEnabled: req.discountEnabled, discountValue: req.discountValue, userEmail: req.session.userEmail });
+    res.render('flights', { isLoggedInUser: req.isLoggedInUser, userEmail: req.session.userEmail, leftNavMenu: leftNavMenu, discountEnabled: discountEnabled, discountValue: discountValue });
 });
 
 

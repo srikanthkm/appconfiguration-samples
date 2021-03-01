@@ -21,34 +21,22 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var indexRouter = require('./routes/index');
-var flightBookingRouter = require('./routes/flights')
+var flightBookingRouter = require('./routes/flights');
 
 var app = express();
 
-/* FEATURE SDK init - start */
-const { AppConfigurationCore, Logger } = require('ibm-appconfiguration-node-core');
-const { AppConfigurationFeature } = require('ibm-appconfiguration-node-feature');
+// App Configuration SDK require & init
+const { AppConfiguration } = require('ibm-appconfiguration-node-sdk');
 
+let region = process.env.REGION;
+let guid = process.env.GUID;
+let apikey = process.env.APIKEY;
 
-// NOTE: Add your custom values
-const coreClient = AppConfigurationCore.getInstance({
-  region: 'us-south',         //use `us-south` for Dallas. `eu-gb` for London
-  guid: 'xxx-abc-xyz',
-  apikey: 'xxx-abc-xyz',
-})
+const client = AppConfiguration.getInstance();
 
-
-const client = AppConfigurationFeature.getInstance({
-  collectionId: 'blue-charge',
-  liveFeatureUpdateEnabled: true
-})
-
-// Enable logger
-var appconfigLogger = Logger.getInstance()
-appconfigLogger.setDebug(true)
-
-/* FEATURE SDK init - end */
-
+client.setDebug(true);             //enable debug
+client.init(region, guid, apikey);
+client.setCollectionId(process.env.COLLECTION_ID);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,17 +51,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 // NOTE: USE EITHER OF BELOW url, options
 
 /* when running the app locally */
-const url = 'mongodb://127.0.0.1:27017/bluecharge'
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-};
+// const url = 'mongodb://127.0.0.1:27017/bluecharge'
+// const options = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// };
 
-/* when running the app on IKS (IBM Kubernetes Service) */
-const url = 'mongodb://mongodb-standalone-0.database:27017/bluecharge?authSource=admin'
+/* when running the app on Kuberenetes with Minikube or on IKS (IBM Kubernetes Service) */
+const url = 'mongodb://mongodb-standalone-0.database:27017/bluecharge?authSource=admin'     //`admin` is the database name associated with the user’s credentials
 const options = {
   user: process.env.MONGO_USER,
-  pass: process.env.MONGO_ROOT_PASSWORD,
+  pass: process.env.MONGO_PWD,
   keepAlive: true,
   keepAliveInitialDelay: 300000,
   useNewUrlParser: true,
@@ -104,14 +92,6 @@ app.use(session({
   })
 }));
 
-
-/* Below middleware will add "email" property to the req header, which is used by getCurrentValue() for feature evaluation */
-app.use(function (req, res, next) {
-  if (req.session.userEmail) {
-    req.headers['email'] = req.session.userEmail
-  }
-  next()
-})
 
 app.use('/', indexRouter);
 app.use('/flightbooking', flightBookingRouter)

@@ -44,20 +44,19 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
         - name: appconfig-bluecharge
-          image: us.icr.io/<namespace>/appconfig-bluecharge:<tag>
-          ports:
-            - containerPort: 3000
+          image: appconfig-bluecharge:latest
+          imagePullPolicy: Never
           env:
             - name: MONGO_USER
               valueFrom:
                 secretKeyRef:
-                  name: my-app-secrets
                   key: MONGO_ROOT_USERNAME
+                  name: my-app-secrets
             - name: MONGO_PWD
               valueFrom:
                 secretKeyRef:
-                  name: my-app-secrets
                   key: MONGO_ROOT_PASSWORD
+                  name: my-app-secrets
             - name: REGION
               valueFrom:
                 configMapKeyRef:
@@ -78,5 +77,3 @@ spec:
                 configMapKeyRef:
                   name: my-app-configmap
                   key: COLLECTION_ID
-      imagePullSecrets:
-        - name: all-icr-io

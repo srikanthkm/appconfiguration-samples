@@ -1,6 +1,6 @@
 {
-  "name": "demosampleapp",
-  "version": "8.5.4",
+  "name": "appconfiguration-sample-nodeapp",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -14,9 +14,8 @@
     "express": "~4.16.1",
     "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
+    "ibm-appconfiguration-node-sdk": "^1.0.1",
     "mongoose": "^5.10.13",
-    "morgan": "~1.9.1",
-    "ibm-appconfiguration-node-core": "0.1.2",
-    "ibm-appconfiguration-node-feature": "0.1.2"
+    "morgan": "~1.9.1"
   }
 }

@@ -10,16 +10,11 @@
 # specific language governing permissions and limitations under the License.
 
 apiVersion: v1
-kind: Service
+kind: ConfigMap
 metadata:
-  name: appconfig-bluecharge
-  namespace: appconfig
-  labels:
-    app: appconfig-bluecharge
-spec:
-  type: NodePort
-  selector:
-    app: appconfig-bluecharge
-  ports:
-  - protocol: TCP
-    port: 3000
+   name: my-app-configmap
+   namespace: appconfig
+data:
+   REGION: <region>     # Ex: `us-south` for Dallas. `eu-gb` for London.
+   GUID: <guid>
+   COLLECTION_ID: blue-charge

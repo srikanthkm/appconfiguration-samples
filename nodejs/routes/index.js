@@ -14,7 +14,9 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/users');
-const { AppConfigurationFeature } = require('ibm-appconfiguration-node-feature');
+const { AppConfiguration } = require('ibm-appconfiguration-node-sdk');
+let leftNavMenu;
+let flightBookingAllowed;
 
 
 function logincheck(req, res, next) {
@@ -29,16 +31,20 @@ function logincheck(req, res, next) {
 }
 
 function featurecheck(req, res, next) {
-  const client = AppConfigurationFeature.getInstance();
+  let identityId = req.session.userEmail ? req.session.userEmail : 'defaultUser';
+  let identityAttributes = {
+    'email': req.session.userEmail
+  }
+  const client = AppConfiguration.getInstance();
 
-  // fetch the feature `left-navigation-menu` and attach the isEnbaled() value to the request header
+  // fetch the feature details of featureId `left-navigation-menu` and get the isEnabled() value of the feature
   const leftNavMenuFeature = client.getFeature('left-navigation-menu')
-  req.leftNavMenu = leftNavMenuFeature.isEnabled();
+  leftNavMenu = leftNavMenuFeature.isEnabled();
 
 
-  // fetch the feature `flight-booking` and attach the getCurrentValue(req) value to the request header
+  // fetch the feature details of featureId `flight-booking` and get the getCurrentValue(identityId, identityAttributes) value of the feature
   const flightBookingAllowedFeature = client.getFeature('flight-booking')
-  req.flightBookingAllowed = flightBookingAllowedFeature.getCurrentValue(req)        // feature evaluation via the req object
+  flightBookingAllowed = flightBookingAllowedFeature.getCurrentValue(identityId, identityAttributes)
 
   next();
 }
@@ -47,7 +53,7 @@ let loginAndFeatureCheck = [logincheck, featurecheck]
 
 /* GET home page. */
 router.get('/', loginAndFeatureCheck, function (req, res, next) {
-  res.render('index', { isLoggedInUser: req.isLoggedInUser, leftNavMenu: req.leftNavMenu, flightBookingAllowed: req.flightBookingAllowed, userEmail: req.session.userEmail });
+  res.render('index', { isLoggedInUser: req.isLoggedInUser, userEmail: req.session.userEmail, leftNavMenu: leftNavMenu, flightBookingAllowed: flightBookingAllowed });
 });
 
 /* Login & Sign Up Code*/

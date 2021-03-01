@@ -12,14 +12,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: appconfig-bluecharge
+  name: database
   namespace: appconfig
   labels:
-    app: appconfig-bluecharge
+    app: database
 spec:
-  type: NodePort
+  clusterIP: None
   selector:
-    app: appconfig-bluecharge
-  ports:
-  - protocol: TCP
-    port: 3000
+    app: database
